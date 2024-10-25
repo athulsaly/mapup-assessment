@@ -18,7 +18,7 @@ model VehiclePopulation {
   model               String
   electricVehicleType String
   cafvEligibility     String
-  electricTange       String
+  electricRange       String
   baseMsrp            String
   legislativeDistrict String
   dolVehicleId        String @id
