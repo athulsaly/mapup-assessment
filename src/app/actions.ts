@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const HomePageController = () => {
   const [skip, setSkip] = useState(0);
@@ -33,29 +33,27 @@ export const HomePageController = () => {
     if (skip + take < totalCount) {
       setDisableNextButton(false);
     }
+    if (skip + take > totalCount) {
+      setDisableNextButton(true);
+    }
     if (skip + take > 0) {
       setDisablePreviousButton(false);
+    }
+    if (skip - take < 0) {
+      setDisablePreviousButton(true);
     }
   }, [skip, take, totalCount]);
 
   const nextPage = () => {
-    if (skip + take > totalCount) {
-      setDisableNextButton(true);
-    } else {
-      setSkip(skip + take);
-    }
+    setSkip(skip + take);
   };
 
   const previousPage = () => {
-    if (skip - take < 0) {
-      setDisablePreviousButton(true);
-    } else {
-      setSkip(skip - take);
-    }
+    setSkip(skip - take);
   };
 
-  const changeLimit = (event: ChangeEvent<HTMLSelectElement>) => {
-    setTake(parseInt(event.target.value));
+  const changeLimit = (event: string) => {
+    setTake(parseInt(event));
   };
 
   return {
