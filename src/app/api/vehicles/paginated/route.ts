@@ -7,11 +7,13 @@ export async function GET(request: NextRequest) {
   const take = parseInt(searchParams.get("take") || "50");
 
   try {
-    const paginatedList = await db.vehiclePopulation.findMany({
+    const listData = await db.vehiclePopulation.findMany({
       skip,
       take,
     });
-    return NextResponse.json(paginatedList);
+    const totalCount = await db.vehiclePopulation.count();
+
+    return NextResponse.json({ listData, totalCount });
   } catch (error) {
     return NextResponse.json({ error: error }, { status: 500 });
   } finally {

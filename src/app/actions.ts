@@ -9,26 +9,44 @@ export const HomePageController = () => {
   const [populationList, setPopulationList] = useState([]);
   const [disableNextButton, setDisableNextButton] = useState(false);
   const [disablePreviousButton, setDisablePreviousButton] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchState, setSearchState] = useState(false);
+
+  const getSearchData = () => setSearchState(!searchState);
 
   useEffect(() => {
-    const fetchTotalCount = async () => {
-      const totalEntries = await fetch("/api/vehicles/totalCount");
-      const totalCount = await totalEntries.json();
-      setTotalCount(totalCount);
-    };
-    fetchTotalCount();
-  }, [totalCount]);
+    if (searchQuery === "") setSearchState(false);
+  }, [searchQuery]);
 
   useEffect(() => {
     const fetchPopulationData = async () => {
-      const response = await fetch(
-        `/api/vehicles/paginated?skip=${skip}&take=${take}`
-      );
-      const data = await response.json();
-      setPopulationList(data);
+      try {
+        const response = await fetch(
+          `/api/vehicles/paginated?skip=${skip}&take=${take}`
+        );
+        const data = await response.json();
+        setPopulationList(data.listData);
+        setTotalCount(data.totalCount);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
-    fetchPopulationData();
+    const fetchSearchData = async () => {
+      try {
+        const response = await fetch(
+          `/api/vehicles/search?search=${searchQuery}&skip=${skip}&take=${take}`
+        );
+        const data = await response.json();
+        setPopulationList(data.listData);
+        setTotalCount(data.totalCount);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (searchState) fetchSearchData();
+    else fetchPopulationData();
 
     if (skip + take < totalCount) {
       setDisableNextButton(false);
@@ -42,7 +60,7 @@ export const HomePageController = () => {
     if (skip - take < 0) {
       setDisablePreviousButton(true);
     }
-  }, [skip, take, totalCount]);
+  }, [skip, take, totalCount, searchState]);
 
   const nextPage = () => {
     setSkip(skip + take);
@@ -56,18 +74,26 @@ export const HomePageController = () => {
     setTake(parseInt(event));
   };
 
+  const handleSearch = (event: { target: { value: string } }) => {
+    setSearchQuery(event.target.value);
+  };
+
   return {
     state: {
       skip,
       take,
       populationList,
       totalCount,
+      searchQuery,
       disabled: { disableNextButton, disablePreviousButton },
     },
     mutation: {
       nextPage,
       previousPage,
       changeLimit,
+      handleSearch,
+      setSearchQuery,
+      getSearchData,
     },
   };
 };
