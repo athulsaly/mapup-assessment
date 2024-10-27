@@ -31,6 +31,12 @@ export async function GET(request: NextRequest) {
         model: {
           search: keyword,
         },
+        postalCode: {
+          search: keyword,
+        },
+        modelYear: {
+          search: keyword,
+        },
       },
       skip,
       take,
@@ -56,6 +62,12 @@ export async function GET(request: NextRequest) {
           search: keyword,
         },
         model: {
+          search: keyword,
+        },
+        postalCode: {
+          search: keyword,
+        },
+        modelYear: {
           search: keyword,
         },
       },

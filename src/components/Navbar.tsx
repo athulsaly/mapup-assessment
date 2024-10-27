@@ -9,7 +9,9 @@ const Navbar = ({
   searchQuery,
   handleChange,
   handleSearch,
+  searchState,
 }: {
+  searchState: boolean;
   searchQuery: string;
   handleChange: (event: { target: { value: string } }) => void;
   handleSearch: () => void;
@@ -27,11 +29,18 @@ const Navbar = ({
             <Input
               value={searchQuery}
               onChange={handleChange}
-              type="search"
+              type="text"
               className="w-56"
               placeholder="Enter keyword to search..."
+              disabled={searchState}
             />
-            <Button onClick={handleSearch}>Search</Button>
+            <Button
+              variant={!searchState ? "default" : "destructive"}
+              onClick={handleSearch}
+              disabled={!searchQuery}
+            >
+              {!searchState ? "Search" : "Clear"}
+            </Button>
           </div>
         </div>
       </MaxWidthWrapper>

@@ -12,10 +12,21 @@ export const HomePageController = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchState, setSearchState] = useState(false);
 
-  const getSearchData = () => setSearchState(!searchState);
+  const getSearchData = () => {
+    if (searchState) {
+      setSearchQuery("");
+    }
+    setSkip(0);
+    setTake(50);
+    setSearchState(!searchState);
+  };
 
   useEffect(() => {
-    if (searchQuery === "") setSearchState(false);
+    if (searchQuery === "") {
+      setSkip(0);
+      setTake(50);
+      setSearchState(false);
+    }
   }, [searchQuery]);
 
   useEffect(() => {
@@ -45,7 +56,7 @@ export const HomePageController = () => {
       }
     };
 
-    if (searchState) fetchSearchData();
+    if (searchState && searchQuery !== "") fetchSearchData();
     else fetchPopulationData();
 
     if (skip + take < totalCount) {
@@ -85,6 +96,7 @@ export const HomePageController = () => {
       populationList,
       totalCount,
       searchQuery,
+      searchState,
       disabled: { disableNextButton, disablePreviousButton },
     },
     mutation: {
