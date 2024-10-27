@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/table";
 import { VehiclePopulation } from "@prisma/client";
 import { checkCafvEligibility, reduceEvType } from "@/lib/utils";
+import Charts from "@/components/Charts";
 
 export default function Home() {
   const { state, mutation } = HomePageController();
@@ -125,6 +126,22 @@ export default function Home() {
                     </Button>
                   </Link>
                 </div>
+              </div>
+              <div className="grid grid-rows-2 p-10 gap-x-4">
+                <Charts
+                  name="Manufacturer - Population"
+                  type="line"
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  //@ts-expect-error
+                  data={state.chartData2}
+                />{" "}
+                <Charts
+                  name="County - Vehicles"
+                  type="line"
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  //@ts-expect-error
+                  data={state.chartData1}
+                />
               </div>
             </>
           ) : (
