@@ -11,6 +11,8 @@ export const HomePageController = () => {
   const [disablePreviousButton, setDisablePreviousButton] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchState, setSearchState] = useState(false);
+  const [chartData1, setChartData1] = useState({});
+  const [chartData2, setChartData2] = useState({});
 
   const getSearchData = () => {
     if (searchState) {
@@ -73,6 +75,57 @@ export const HomePageController = () => {
     }
   }, [skip, take, totalCount, searchState]);
 
+  useEffect(() => {
+    const fetchCountyChartData = async () => {
+      try {
+        const response = await fetch(`/api/vehicles/countydata`);
+        const data = await response.json();
+        const chartData = {
+          labels: data.labels,
+          datasets: [
+            {
+              label: "My First Dataset",
+              data: data.count,
+              fill: false,
+              borderColor: "rgb(75, 192, 192)",
+              tension: 0.1,
+            },
+          ],
+        };
+        setChartData1(chartData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCountyChartData();
+  }, []);
+  useEffect(() => {
+    const fetchVehicleMakeData = async () => {
+      try {
+        const response = await fetch(`/api/vehicles/makedata`);
+        const data = await response.json();
+        console.log(data);
+        const chartData = {
+          labels: data.labels,
+          datasets: [
+            {
+              label: "My First Dataset",
+              data: data.count,
+              fill: false,
+              borderColor: "rgb(75, 192, 192)",
+              tension: 0.1,
+            },
+          ],
+        };
+
+        setChartData2(chartData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchVehicleMakeData();
+  }, []);
+
   const nextPage = () => {
     setSkip(skip + take);
   };
@@ -96,7 +149,9 @@ export const HomePageController = () => {
       populationList,
       totalCount,
       searchQuery,
+      chartData2,
       searchState,
+      chartData1,
       disabled: { disableNextButton, disablePreviousButton },
     },
     mutation: {
