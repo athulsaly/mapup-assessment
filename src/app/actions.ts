@@ -73,6 +73,7 @@ export const HomePageController = () => {
     if (skip - take < 0) {
       setDisablePreviousButton(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skip, take, totalCount, searchState]);
 
   useEffect(() => {
