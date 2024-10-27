@@ -14,5 +14,5 @@ Built with the Next.js, Postgres, TypeScript, Tailwind, NeonDB, shadcn and Chart
 - 🛒 Chart.js was used for building charts
 - ⌨️ 100% written in TypeScript
 
-The project is live at [https://cobracaseshop.vercel.app](https://mapup-dev.vercel.app/)
+The project is live at [https://mapup-dev.vercel.app](https://mapup-dev.vercel.app/)
 
