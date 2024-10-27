@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -8,21 +9,21 @@ datasource db {
 }
 
 model VehiclePopulation {
-  vin                 String @db.VarChar(50)
-  county              String @db.VarChar(50)
-  city                String @db.VarChar(50)
-  state               String @db.VarChar(50)
-  postalCode          String @db.VarChar(20)
-  modelYear           String @db.VarChar(50)
-  make                String @db.VarChar(50)
-  model               String @db.VarChar(50)
-  electricVehicleType String @db.VarChar(50)
-  cafvEligibility     String @db.VarChar(100)
-  electricTange       String @db.VarChar(50)
-  baseMsrp            String @db.VarChar(50)
-  legislativeDistrict String @db.VarChar(50)
-  dolVehicleId        String @id @db.VarChar(50)
-  vehicleLocation     String @db.VarChar(150)
-  electricUtility     String @db.VarChar(100)
-  censusTract         String @db.VarChar(20)
+  vin                 String
+  county              String
+  city                String
+  state               String
+  postalCode          String
+  modelYear           String
+  make                String
+  model               String
+  electricVehicleType String
+  cafvEligibility     String
+  electricRange       String
+  baseMsrp            String
+  legislativeDistrict String
+  dolVehicleId        String @id
+  vehicleLocation     String
+  electricUtility     String
+  censusTract         String
 }

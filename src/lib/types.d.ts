@@ -9,7 +9,7 @@ interface VehicleListProps {
   model: string;
   electricVehicleType: string;
   cafvEligibility: string;
-  electricTange: string;
+  electricRange: string;
   baseMsrp: string;
   legislativeDistrict: string;
   dolVehicleId: string;
